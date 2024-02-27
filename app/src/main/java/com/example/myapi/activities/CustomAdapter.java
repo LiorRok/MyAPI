@@ -57,14 +57,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         TextView textViewNativeName = holder.nativeName;
         ImageView imageView = holder.imageView;
 
-        // Get the current state from the dataSet
         States state = dataSet.get(position);
 
         textViewName.setText(state.getName());
         textViewNativeName.setText(state.getNativeName());
-
-        // Load flag image using Picasso
-//        Picasso.get().load(state.getFlag().get("png")).into(imageView);
 
         // Parse flag URLs from the string
         String flagString = state.getFlag();
@@ -74,10 +70,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             for (String part : parts) {
                 if (part.contains("png")) {
                     pngUrl = (part.split(":")[1] + ":" + part.split(":")[2]).trim();
-                    // Remove curly braces and quotes
                     pngUrl = pngUrl.replace("{", "").replace("}", "").replace("\"", "").trim();
                     Log.d("result", pngUrl);
-                    break; // No need to iterate further
+                    break;
                 }
             }
         }
@@ -86,8 +81,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         if (!pngUrl.isEmpty()) {
             Picasso.get().load(pngUrl).into(imageView);
         } else {
-            // Handle case when pngUrl is empty or not found
-            // For example, you can set a placeholder image
             imageView.setImageResource(R.drawable.cupcake);
         }
     }
